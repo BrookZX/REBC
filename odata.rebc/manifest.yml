@@ -1,0 +1,12 @@
+---
+applications:
+- name: java.olingo
+  memory: 1G
+  path: target/java.olingo.war
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.4 
+  env:
+      # Assume more than 20 threads when computing the memory settings
+      JBP_CONFIG_OPEN_JDK_JRE: '[memory_calculator: {stack_threads: 50}]'
+      # Use the non-blocking /dev/urandom instead of the default to generate random numbers.
+      # This may help with slow startup times, especially when using Spring Boot.
+      JAVA_OPTS: -Djava.security.egd=file:///dev/./urandom
